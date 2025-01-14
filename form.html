@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+
+<head>
+    
+    <title>Registration Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 50px;
+        }
+        form {
+            max-width: 400px;
+            margin: auto;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            box-sizing: border-box;
+        }
+        .error {
+            color: red;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <h2>Registration Form</h2>
+    <form id="registrationForm" onsubmit="return validateForm()">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" placeholder="Enter your name">
+        <div class="error" id="nameError"></div>
+
+        <label for="email">Email:</label>
+        <input type="text" id="email" name="email" placeholder="Enter your email">
+        <div class="error" id="emailError"></div>
+
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" placeholder="Enter your password">
+        <div class="error" id="passwordError"></div>
+
+        <label for="confirmPassword">Confirm Password:</label>
+        <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm your password">
+        <div class="error" id="confirmPasswordError"></div>
+
+        <label for="phone">Phone:</label>
+        <input type="text" id="phone" name="phone" placeholder="Enter your phone number">
+        <div class="error" id="phoneError"></div>
+
+        <button type="submit">Register</button>
+    </form>
+
+    <script>
+        function validateForm() {
+           
+            document.querySelectorAll('.error').forEach(el => el.textContent = '');
+
+            let isValid = true;
+
+           
+            const name = document.getElementById('name').value.trim();
+            if (name === "") {
+                document.getElementById('nameError').textContent = "Name is required.";
+                isValid = false;
+            }
+
+            const email = document.getElementById('email').value.trim();
+            const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+            if (email === "") {
+                document.getElementById('emailError').textContent = "Email is required.";
+                isValid = false;
+            } else if (!emailPattern.test(email)) {
+                document.getElementById('emailError').textContent = "Enter a valid email address.";
+                isValid = false;
+            }
+
+            const password = document.getElementById('password').value;
+            if (password === "") {
+                document.getElementById('passwordError').textContent = "Password is required.";
+                isValid = false;
+            } else if (password.length < 6) {
+                document.getElementById('passwordError').textContent = "Password must be at least 6 characters long.";
+                isValid = false;
+            }
+
+      
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            if (confirmPassword !== password) {
+                document.getElementById('confirmPasswordError').textContent = "Passwords do not match.";
+                isValid = false;
+            }
+
+           
+            const phone = document.getElementById('phone').value.trim();
+            const phonePattern = /^[0-9]{10}$/;
+            if (phone === "") {
+                document.getElementById('phoneError').textContent = "Phone number is required.";
+                isValid = false;
+            } else if (!phonePattern.test(phone)) {
+                document.getElementById('phoneError').textContent = "Enter a valid 10-digit phone number.";
+                isValid = false;
+            }
+
+            return isValid;
+        }
+    </script>
+</body>
+</html>
